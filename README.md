@@ -1,1 +1,1 @@
-# Mediapipe_Multiple# YOLO_Mediapipe
+# detect3.py 실행
