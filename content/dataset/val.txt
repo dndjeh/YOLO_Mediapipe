@@ -1,0 +1,11 @@
+C:/YOLO/dataset/valid/images\-18-_jpg.rf.cc9bdeb94c5c40361ea203d8ddb7dd34.jpg
+C:/YOLO/dataset/valid/images\-22-_jpg.rf.8df1295b7ac94d19370c06bf33fe7bf7.jpg
+C:/YOLO/dataset/valid/images\-3-_jpg.rf.f60a32f9e1b9580bebe8d1feb4a31831.jpg
+C:/YOLO/dataset/valid/images\-_jpg.rf.faf1c1a33aee6a9c3fb73f8670209004.jpg
+C:/YOLO/dataset/valid/images\images-1-_jpg.rf.d0e112c2a6c4c6258d54c6cc7b7385f7.jpg
+C:/YOLO/dataset/valid/images\images-13-_jpg.rf.8ceebe436c69b6210d3efea1a09d075d.jpg
+C:/YOLO/dataset/valid/images\images-15-_jpg.rf.5afc26e5c031ad29044faae5343f730a.jpg
+C:/YOLO/dataset/valid/images\images-18-_jpg.rf.2c44337fe484f11d5e6b9c2c70e8372c.jpg
+C:/YOLO/dataset/valid/images\images-2-_jpg.rf.b9caa2ed5ab97812fa21bf3c018f0058.jpg
+C:/YOLO/dataset/valid/images\images-30-_jpg.rf.725dc2e4caad343449dba1ce0875a520.jpg
+C:/YOLO/dataset/valid/images\images-7-_jpg.rf.ce7b6a4a6d8cd104af23850dc89dd5f3.jpg

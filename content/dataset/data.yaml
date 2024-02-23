@@ -1,0 +1,12 @@
+names:
+- Person
+nc: 1
+roboflow:
+  license: Public Domain
+  project: people-w712j
+  url: https://universe.roboflow.com/ulsanuniversity/people-w712j/dataset/1
+  version: 1
+  workspace: ulsanuniversity
+test: ../test/images
+train: C:/YOLO/dataset/train.txt
+val: C:/YOLO/dataset/val.txt
