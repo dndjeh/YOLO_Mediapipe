@@ -78,32 +78,22 @@ def detectPose(image, pose, display=True):
 # pose detection function start
 
 
-def skeleton(cropped_img, window_states, title):
-
-    # Initialize a resizable window.
-    
-
-    # w = cropped_img.get(cv2.CAP_PROP_FRAME_WIDTH)
-    # h = cropped_img.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    # height, width, _ = cropped_img.shape
-    # w = width
+def skeleton(cropped_img, window_states, title):   
     # Iterate until the webcam is accessed successfully.
+    
+    #-------------------------------------------------------------------- Hand 추적
     # with mp_hands.Hands(
     #     model_complexity=0,
     #     min_detection_confidence=0.5,
     #     min_tracking_confidence=0.5,) as hands:
-            # Read a frame.
+    #------------------------------------------------------------------------ Hand 추적       
+        
+        # Read a frame.
         frame = cropped_img.copy()
-
-        # Flip the frame horizontally for natural (selfie-view) visualization.
-        #frame = cv2.flip(frame, 1)
 
         # Get the width and height of the frame.
         frame_height, frame_width, _ = frame.shape
 
-        # Resize the frame while keeping the aspect ratio.
-        
-        #frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
 
         frame, landmarks = detectPose(frame, pose_video, display=False)
 
@@ -112,7 +102,7 @@ def skeleton(cropped_img, window_states, title):
         
         frame.flags.writeable = True
 
-        #----------------------------------------------------------------Hand 추적
+        #------------------------------------------------------------------------ Hand 추적
         #results = hands.process(frame)
         # if results.multi_hand_landmarks:
         #     for hand_landmarks in results.multi_hand_landmarks:
@@ -122,9 +112,9 @@ def skeleton(cropped_img, window_states, title):
         #             mp_hands.HAND_CONNECTIONS,
         #             mp_drawing_styles.get_default_hand_landmarks_style(),
         #             mp_drawing_styles.get_default_hand_connections_style())
-        #----------------------------------------------------------------
+        #------------------------------------------------------------------------ Hand 추적
 
-        '''crop화면 띄우기'''
+        '''미디어파이프가 적용된 crop화면 띄우기'''
         # Display the frame.
         cv2.imshow(window_states[title], frame)
 

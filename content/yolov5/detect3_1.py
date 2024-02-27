@@ -35,7 +35,6 @@ import platform
 import sys
 from pathlib import Path
 import torch
-from Cropped import crop
 import Media as md
 
 from sortdir import sort
@@ -190,7 +189,7 @@ def run(
             data = {"Image Name": image_name, "Prediction": prediction, "Confidence": confidence}
             with open(csv_path, mode="a", newline="") as f:
                 writer = csv.DictWriter(f, fieldnames=data.keys())
-                if not csv_path.is_file():
+                if not csv_path.is_file(): 
                     writer.writeheader()
                 writer.writerow(data)
 

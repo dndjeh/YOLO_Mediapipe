@@ -35,10 +35,9 @@ import platform
 import sys
 from pathlib import Path
 import torch
-from Cropped import crop
 import Media as md
 
-#이거 추가해야 내가 Window에서 돌릴 수 있음 
+#이거 추가해야 Window에서 돌릴 수 있음 
 #---------------------------------------------------
 import pathlib
 temp = pathlib.PosixPath
@@ -171,7 +170,7 @@ def run(
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
             
             '''class 번호가 0인것만'''
-            #pred = [det[det[:, 5] == 0] for det in pred]
+            pred = [det[det[:, 5] == 0] for det in pred]
            
         # Second-stage classifier (optional)
         # pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
@@ -275,33 +274,37 @@ def run(
                     cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
                     cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
                 
-                
-                for j, xyxy in enumerate(det):
+                '''
+                det = [
+                    [x_min1, y_min1, x_max1, y_max1, confidence1, class1],
+                    [x_min2, y_min2, x_max2, y_max2, confidence2, class2],
+                    ]
+                    det는 객체를 추정한 바운딩 박스의 좌표와 class번호가 저장되어있다.
+                ''' 
+
+                for j, xyxy in enumerate(det):  #det정보를 계속 가져와서 새로운 창을 만들고 해당 창에 스켈레톤을 입힌 후 원본영상에 덮어 씌움
                     #print(det)
-                    if xyxy[5] == 0:
-                        title = f"Object_{c}_{j}"  # 객체 식별 번호를 추가하여 중복 방지
-                        cropped_img = im0[int(xyxy[1]): int(xyxy[3]), int(xyxy[0]): int(xyxy[2])]
+                    if xyxy[5] == 0: #class번호가 0인 것만
+                        title = f"Object_{c}_{j}"  # 객체 식별 번호를 추가하여(j) 새로운 창 title 만들기
+                        cropped_img = im0[int(xyxy[1]): int(xyxy[3]), int(xyxy[0]): int(xyxy[2])] #바운딩 박스만큼 crop하기
 
                         # Check if the window for this object is already created
-                        if window_states.get(title) is None:
+                        if window_states.get(title) is None: #  이미 window_states 딕셔너리에있는 title이라면 창을 만들지 않는다. -> 중복 방지 
                             window_name = f"Cropped Image {title}"
                             # If not created, create a new window and update the dictionary
                             
-                            '''crop화면 띄우기'''
+                            '''crop화면 생성'''
                             cv2.namedWindow(str(window_name), cv2.WINDOW_NORMAL)
                             cv2.resizeWindow(str(window_name),  im0.shape[1], im0.shape[0])
                             
                             window_states[title] = window_name  # 라벨 키를 가지고, 값을 window_name으로
 
-
-                        #md.skeleton(cropped_img, window_states, title)
-
                         '''원본영상에 스켈레톤 덮어 씌우기'''
-                        copy_image = md.skeleton(cropped_img, window_states, title)
-                        resized_copy_image = cv2.resize(copy_image, (int(xyxy[2]) - int(xyxy[0]), int(xyxy[3]) - int(xyxy[1])))
-                        im0[int(xyxy[1]): int(xyxy[3]), int(xyxy[0]): int(xyxy[2])] = resized_copy_image
+                        copy_image = md.skeleton(cropped_img, window_states, title) #crop한 window창에 미디어파이프를 적용하고 copy_image로 저장
+                        resized_copy_image = cv2.resize(copy_image, (int(xyxy[2]) - int(xyxy[0]), int(xyxy[3]) - int(xyxy[1]))) #copy_image크기를 맞춰준다
+                        im0[int(xyxy[1]): int(xyxy[3]), int(xyxy[0]): int(xyxy[2])] = resized_copy_image #원본영상(im0)의 바운딩 박스 부분에 resized_copy_image를 적용한다 
 
-                cv2.imshow(str(window_name), cropped_img)
+                #cv2.imshow(str(window_name), cropped_img)   #crop이미지 보여주기
                 
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond to wait  
